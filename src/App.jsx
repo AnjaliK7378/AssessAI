@@ -16,7 +16,7 @@ import StudentDashboard from "./pages/StudentDashboard/StudentDashboard";
 import StudentInstructions from "./pages/StudentInstructions/StudentInstructions";
 import StudentTest from "./pages/StudentTest/StudentTest";
 import StudentResult from "./pages/StudentResult/StudentResult";
-
+import Settings from "./pages/Settings/Settings";
 function App() {
   return (
     <BrowserRouter>
@@ -73,6 +73,7 @@ function App() {
             path="/teacher/reports"
             element={<Reports />}
           />
+          <Route path="settings" element={<Settings />} />
 
         </Route>
 

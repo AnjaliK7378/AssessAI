@@ -6,9 +6,7 @@ from sqlalchemy.exc import SQLAlchemyError
 
 from database import engine, Base
 import models
-from routers import assessments, auth, submissions, student_dashboard
-
-
+from routers import assessments, auth, submissions, student_dashboard, teacher_results
 # Create database tables if they do not exist
 Base.metadata.create_all(bind=engine)
 
@@ -35,6 +33,7 @@ app.include_router(assessments.router)
 app.include_router(auth.router)
 app.include_router(submissions.router)
 app.include_router(student_dashboard.router)
+app.include_router(teacher_results.router)
 
 @app.get("/")
 def root():

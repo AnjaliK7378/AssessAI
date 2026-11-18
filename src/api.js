@@ -37,27 +37,18 @@ export const loginUser = async (loginData) => {
 };
 
 // GET ALL ASSESSMENTS
-export const getAssessments = async () => {
-  const token = localStorage.getItem("access_token");
 
+export const getAssessments = async () => {
   const response = await fetch(`${API_BASE_URL}/assessments/`, {
     method: "GET",
     headers: {
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
+      ...getAuthHeaders(),
     },
   });
 
-  const errorData = await response.json().catch(() => ({}));
-
-  if (!response.ok) {
-    throw new Error(
-      errorData.detail || "Failed to fetch assessments"
-    );
-  }
-
-  return errorData;
+  return handleResponse(response);
 };
+
 
 // GET ONE ASSESSMENT
 export const getAssessment = async (assessmentId) => {
@@ -128,6 +119,53 @@ export const submitAssessment = async (submissionData) => {
       ...getAuthHeaders(),
     },
     body: JSON.stringify(submissionData),
+  });
+
+  return handleResponse(response);
+};
+
+
+// ==========================================
+// GET TEACHER DASHBOARD STATISTICS
+// ==========================================
+export const getTeacherDashboard = async () => {
+  const response = await fetch(`${API_BASE_URL}/teacher/dashboard`, {
+    method: "GET",
+    headers: {
+      ...getAuthHeaders(),
+    },
+  });
+
+  return handleResponse(response);
+};
+
+
+// ==========================================
+// GET STUDENT RESULTS FOR TEACHER
+// ==========================================
+export const getTeacherResults = async () => {
+  const response = await fetch(`${API_BASE_URL}/teacher/results`, {
+    method: "GET",
+    headers: {
+      ...getAuthHeaders(),
+    },
+  });
+
+  return handleResponse(response);
+};
+
+
+
+/* ==========================================
+   GET TEACHER STUDENTS
+========================================== */
+
+export const getTeacherStudents = async () => {
+  const response = await fetch(`${API_BASE_URL}/teacher/students`, {
+    method: "GET",
+    headers: {
+      ...getAuthHeaders(),
+    },
   });
 
   return handleResponse(response);
