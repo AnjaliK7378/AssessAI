@@ -73,6 +73,22 @@ export const getAssessment = async (assessmentId) => {
   return handleResponse(response);
 };
 
+
+// START ASSESSMENT
+export const startAssessment = async (assessmentId) => {
+  const response = await fetch(
+    `${API_BASE_URL}/assessments/${assessmentId}/start`,
+    {
+      method: "POST",
+      headers: {
+        ...getAuthHeaders(),
+      },
+    }
+  );
+
+  return handleResponse(response);
+};
+
 // CREATE ASSESSMENT
 export const createAssessment = async (assessmentData) => {
   const response = await fetch(`${API_BASE_URL}/assessments/`, {
@@ -98,6 +114,21 @@ export const publishAssessment = async (assessmentId) => {
       },
     }
   );
+
+  return handleResponse(response);
+};
+
+
+
+export const submitAssessment = async (submissionData) => {
+  const response = await fetch(`${API_BASE_URL}/submissions/`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      ...getAuthHeaders(),
+    },
+    body: JSON.stringify(submissionData),
+  });
 
   return handleResponse(response);
 };

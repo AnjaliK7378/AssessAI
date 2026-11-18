@@ -45,6 +45,11 @@ class AssessmentCreate(BaseModel):
     modality: str
     status: str = "draft"
 
+    # Assessment timing settings
+    duration_minutes: int = Field(default=30, gt=0)
+    start_time: Optional[datetime] = None
+    end_time: Optional[datetime] = None
+
     questions: list[QuestionCreate] = Field(default_factory=list)
 
 
@@ -60,11 +65,16 @@ class AssessmentResponse(BaseModel):
     modality: str
     status: str
     total_questions: int
+
+    # Assessment timing settings
+    duration_minutes: int
+    start_time: Optional[datetime] = None
+    end_time: Optional[datetime] = None
+
     created_at: Optional[datetime] = None
     updated_at: Optional[datetime] = None
 
     questions: list[QuestionResponse] = Field(default_factory=list)
-
 
 
 # -------------------------
@@ -101,3 +111,25 @@ class AuthResponse(BaseModel):
     token_type: str
     role: str
     user: dict
+
+
+# -------------------------
+# SUBMISSION SCHEMAS
+# -------------------------
+
+class SubmissionCreate(BaseModel):
+    assessment_id: int
+    answers: dict[str, str]
+
+
+class SubmissionResponse(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+    id: int
+    student_id: int
+    assessment_id: int
+    answers: str
+    score: Optional[float] = None
+    total_marks: float
+    status: str
+    submitted_at: Optional[datetime] = None

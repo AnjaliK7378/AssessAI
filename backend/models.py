@@ -78,8 +78,13 @@ class Assessment(Base):
 
     total_questions = Column(Integer, default=0, nullable=False)
 
+    # Assessment timing settings
+    duration_minutes = Column(Integer, default=30, nullable=False)
+
+    start_time = Column(DateTime(timezone=True), nullable=True)
+    end_time = Column(DateTime(timezone=True), nullable=True)
+
     # Teacher who created this assessment
-    # Nullable to preserve existing assessments
     teacher_id = Column(
         Integer,
         ForeignKey("teachers.id"),
@@ -105,7 +110,6 @@ class Assessment(Base):
         cascade="all, delete-orphan",
         order_by="Question.question_number",
     )
-
 
 # -------------------------
 # QUESTION MODEL
@@ -141,5 +145,109 @@ class Question(Base):
             "assessment_id",
             "question_number",
             name="uq_assessment_question_number",
+        ),
+    )
+
+    
+# -------------------------
+# SUBMISSION MODEL
+# -------------------------
+
+class Submission(Base):
+    __tablename__ = "submissions"
+
+    id = Column(Integer, primary_key=True, index=True)
+
+    student_id = Column(
+        Integer,
+        ForeignKey("students.id"),
+        nullable=False,
+        index=True,
+    )
+
+    assessment_id = Column(
+        Integer,
+        ForeignKey("assessments.id", ondelete="CASCADE"),
+        nullable=False,
+        index=True,
+    )
+
+    # Student answers stored as JSON
+    answers = Column(Text, nullable=False)
+
+    score = Column(Float, nullable=True)
+    total_marks = Column(Float, nullable=False)
+
+    status = Column(
+        String(20),
+        default="submitted",
+        nullable=False,
+    )
+
+    submitted_at = Column(
+        DateTime(timezone=True),
+        server_default=func.now(),
+        nullable=False,
+    )
+
+    __table_args__ = (
+        UniqueConstraint(
+            "student_id",
+            "assessment_id",
+            name="uq_student_assessment_submission",
+        ),
+    )
+
+
+# -------------------------
+# ASSESSMENT ATTEMPT MODEL
+# -------------------------
+
+class AssessmentAttempt(Base):
+    __tablename__ = "assessment_attempts"
+
+    id = Column(Integer, primary_key=True, index=True)
+
+    student_id = Column(
+        Integer,
+        ForeignKey("students.id"),
+        nullable=False,
+        index=True,
+    )
+
+    assessment_id = Column(
+        Integer,
+        ForeignKey("assessments.id", ondelete="CASCADE"),
+        nullable=False,
+        index=True,
+    )
+
+    started_at = Column(
+        DateTime(timezone=True),
+        server_default=func.now(),
+        nullable=False,
+    )
+
+    expires_at = Column(
+        DateTime(timezone=True),
+        nullable=False,
+    )
+
+    status = Column(
+        String(20),
+        default="in_progress",
+        nullable=False,
+    )
+
+    completed_at = Column(
+        DateTime(timezone=True),
+        nullable=True,
+    )
+
+    __table_args__ = (
+        UniqueConstraint(
+            "student_id",
+            "assessment_id",
+            name="uq_student_assessment_attempt",
         ),
     )

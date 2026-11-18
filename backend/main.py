@@ -6,7 +6,7 @@ from sqlalchemy.exc import SQLAlchemyError
 
 from database import engine, Base
 import models
-from routers import assessments, auth
+from routers import assessments, auth, submissions, student_dashboard
 
 
 # Create database tables if they do not exist
@@ -33,6 +33,8 @@ app.add_middleware(
 # Register assessment API routes
 app.include_router(assessments.router)
 app.include_router(auth.router)
+app.include_router(submissions.router)
+app.include_router(student_dashboard.router)
 
 @app.get("/")
 def root():

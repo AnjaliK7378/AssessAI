@@ -1,4 +1,8 @@
-import { getAssessment } from "../../api";
+import {
+  getAssessment,
+  startAssessment,
+  submitAssessment,
+} from "../../api";
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "./StudentTest.css";
@@ -17,36 +21,57 @@ function StudentTest() {
 
   const [isCameraOn, setIsCameraOn] = useState(false);
   const [cameraStream, setCameraStream] = useState(null);
+  const [submitting, setSubmitting] = useState(false);
 
   // Fetch actual assessment and questions from FastAPI.
-  useEffect(() => {
+   
+useEffect(() => {
   const fetchAssessment = async () => {
     try {
       setLoading(true);
       setError("");
 
-      // Fetch assessment using authenticated API function
+      // STEP 1: Start or retrieve the student's attempt
+      const attempt = await startAssessment(assessmentId);
+
+      console.log("Assessment attempt:", attempt);
+
+      // Do not allow expired or completed attempts
+      if (attempt.status !== "in_progress") {
+        throw new Error(
+          `Your assessment attempt is ${attempt.status}. Please contact your teacher.`
+        );
+      }
+
+      // STEP 2: Fetch assessment questions
       const data = await getAssessment(assessmentId);
+
+      console.log("Assessment data:", data);
 
       if (data.status?.toLowerCase() !== "active") {
         throw new Error("This assessment has not been published.");
       }
 
-      // Convert JSON string options into arrays
+      // STEP 3: Format question options
       const formattedQuestions = (data.questions || []).map((question) => {
         let options = [];
 
-        try {
-          options = question.options
-            ? JSON.parse(question.options)
-            : [];
-        } catch {
-          options = [];
+        if (Array.isArray(question.options)) {
+          options = question.options;
+        } else if (typeof question.options === "string") {
+          try {
+            const parsed = JSON.parse(question.options);
+            options = Array.isArray(parsed) ? parsed : [parsed];
+          } catch {
+            options = question.options.split(",");
+          }
         }
 
         return {
           ...question,
-          options,
+          options: options
+            .map((option) => String(option).trim())
+            .filter(Boolean),
         };
       });
 
@@ -54,13 +79,15 @@ function StudentTest() {
         throw new Error("This assessment has no questions.");
       }
 
+      // STEP 4: Display assessment
       setAssessment({
         ...data,
         questions: formattedQuestions,
       });
+
     } catch (err) {
       console.error("Assessment loading error:", err);
-      setError(err.message);
+      setError(err.message || "Unable to load assessment.");
     } finally {
       setLoading(false);
     }
@@ -68,6 +95,7 @@ function StudentTest() {
 
   fetchAssessment();
 }, [assessmentId]);
+
 
   // Stop camera when leaving the page.
   useEffect(() => {
@@ -347,7 +375,10 @@ function StudentTest() {
     }
   };
 
-  const handleSubmit = () => {
+  
+  const handleSubmit = async () => {
+    if (submitting) return;
+
     if (modality === "omr" && !uploadedFile) {
       alert("Please upload your completed OMR answer sheet.");
       return;
@@ -367,23 +398,47 @@ function StudentTest() {
     }
 
     if (modality === "sign_language") {
-      alert(
-        "Sign language video submission is not connected yet."
-      );
+      alert("Sign language submission is not connected yet.");
       return;
     }
 
     if (modality === "speech") {
-      alert(
-        "Speech recording and submission are not connected yet."
-      );
+      alert("Speech recording and submission are not connected yet.");
       return;
     }
 
-    // Submission API will be connected in the next step.
-    alert(
-      "Your responses are ready. The backend submission and evaluation API still needs to be connected."
-    );
+    if (modality !== "mcq") {
+      alert(
+        "Online submission is currently available for MCQ assessments only."
+      );
+      return;
+    }
+    try {
+      setSubmitting(true);
+
+      const result = await submitAssessment({
+        assessment_id: Number(assessmentId),
+        answers: answers,
+      });
+
+      console.log("Submission response:", result);
+
+      if (result.status === "evaluated") {
+        alert(
+          `Assessment submitted successfully!\nYour Score: ${result.score} / ${result.total_marks}`
+        );
+      } else {
+        alert("Assessment submitted successfully!");
+      }
+
+      navigate("/student/dashboard");
+
+    } catch (err) {
+      console.error("Submission error:", err);
+      alert(err.message || "Failed to submit assessment.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -474,8 +529,9 @@ function StudentTest() {
             <button
               className="next-button"
               onClick={handleSubmit}
+              disabled={submitting}
             >
-              Submit Assessment
+              {submitting ? "Submitting..." : "Submit Assessment"}
             </button>
           )}
 

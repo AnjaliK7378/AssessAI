@@ -1,9 +1,7 @@
-
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { getAssessment } from "../../api";
 import "./StudentInstructions.css";
-
-const API_URL = "http://127.0.0.1:8000";
 
 function StudentInstructions() {
   const navigate = useNavigate();
@@ -14,35 +12,29 @@ function StudentInstructions() {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    const fetchAssessment = async () => {
-      try {
-        setLoading(true);
-        setError("");
+  const fetchAssessment = async () => {
+    try {
+      setLoading(true);
+      setError("");
 
-        const response = await fetch(
-          `${API_URL}/assessments/${assessmentId}`
-        );
+      // Fetch assessment with authentication token
+      const data = await getAssessment(assessmentId);
 
-        if (!response.ok) {
-          throw new Error("Assessment not found.");
-        }
-
-        const data = await response.json();
-
-        if (data.status !== "active") {
-          throw new Error("This assessment is not published yet.");
-        }
-
-        setAssessment(data);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
+      if (data.status !== "active") {
+        throw new Error("This assessment is not published yet.");
       }
-    };
 
-    fetchAssessment();
-  }, [assessmentId]);
+      setAssessment(data);
+    } catch (err) {
+      console.error("Instruction page error:", err);
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchAssessment();
+}, [assessmentId]);
 
   const getModality = (modality) => {
     const modalities = {
