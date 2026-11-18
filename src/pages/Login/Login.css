@@ -1,0 +1,176 @@
+.login-page {
+  min-height: 100vh;
+  background: #f5f7fb;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 460px;
+  background: white;
+  padding: 35px;
+  border-radius: 14px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* Header */
+
+.login-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.login-header h1 {
+  margin: 0;
+  color: #2563eb;
+  font-size: 30px;
+}
+
+.login-header p {
+  margin-top: 5px;
+  color: #6b7280;
+  font-size: 13px;
+}
+
+/* Title */
+
+.login-title {
+  text-align: center;
+  margin-bottom: 22px;
+}
+
+.login-title h2 {
+  margin: 0;
+  font-size: 22px;
+  color: #1f2937;
+}
+
+.login-title p {
+  margin-top: 6px;
+  color: #6b7280;
+  font-size: 13px;
+}
+
+/* Role Selection */
+
+.role-selection {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.role-card {
+  border: 2px solid #e5e7eb;
+  background: white;
+  border-radius: 10px;
+  padding: 18px 10px;
+  cursor: pointer;
+  text-align: center;
+  transition: 0.2s;
+}
+
+.role-card:hover {
+  border-color: #93c5fd;
+}
+
+.role-card.selected {
+  border-color: #2563eb;
+  background: #eff6ff;
+}
+
+.role-icon {
+  font-size: 30px;
+  margin-bottom: 8px;
+}
+
+.role-card strong {
+  display: block;
+  color: #1f2937;
+  font-size: 15px;
+}
+
+.role-card span {
+  display: block;
+  margin-top: 4px;
+  color: #6b7280;
+  font-size: 11px;
+}
+
+/* Form */
+
+form label {
+  display: block;
+  margin-bottom: 6px;
+  margin-top: 15px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+}
+
+form input {
+  width: 100%;
+  padding: 11px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 7px;
+  outline: none;
+  font-size: 14px;
+}
+
+form input:focus {
+  border-color: #2563eb;
+}
+
+/* Login Button */
+
+.login-button {
+  width: 100%;
+  margin-top: 25px;
+  padding: 12px;
+  border: none;
+  border-radius: 7px;
+  background: #2563eb;
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.login-button:hover {
+  background: #1d4ed8;
+}
+
+/* Mobile */
+
+@media (max-width: 500px) {
+  .login-card {
+    padding: 25px 20px;
+  }
+
+  .role-selection {
+    gap: 10px;
+  }
+
+  .role-card {
+    padding: 15px 8px;
+  }
+}
+
+
+.login-error {
+  background-color: #fee2e2;
+  color: #b91c1c;
+  padding: 12px;
+  border-radius: 8px;
+  margin: 12px 0;
+  font-size: 14px;
+  border: 1px solid #fecaca;
+}
+
+.login-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

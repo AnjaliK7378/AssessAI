@@ -1,0 +1,245 @@
+.instruction-page {
+  min-height: 100vh;
+  background: #f5f7fb;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 30px;
+}
+
+.instruction-card {
+  width: 100%;
+  max-width: 800px;
+
+  background: white;
+
+  padding: 35px;
+
+  border-radius: 14px;
+
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+}
+
+/* Header */
+
+.instruction-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.subject-badge {
+  display: inline-block;
+
+  padding: 6px 12px;
+
+  background: #eff6ff;
+  color: #2563eb;
+
+  border-radius: 6px;
+
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.instruction-header h1 {
+  margin: 15px 0 8px;
+
+  font-size: 28px;
+  color: #1f2937;
+}
+
+.instruction-header p {
+  margin: 0;
+
+  color: #6b7280;
+  font-size: 14px;
+}
+
+/* Details */
+
+.instruction-details {
+  display: grid;
+
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 15px;
+
+  margin-bottom: 30px;
+}
+
+.instruction-details div {
+  background: #f8fafc;
+
+  padding: 15px;
+
+  border-radius: 8px;
+
+  text-align: center;
+}
+
+.instruction-details span {
+  display: block;
+
+  color: #6b7280;
+
+  font-size: 12px;
+
+  margin-bottom: 6px;
+}
+
+.instruction-details strong {
+  color: #1f2937;
+
+  font-size: 15px;
+}
+
+/* Instructions */
+
+.instructions-section {
+  margin-bottom: 25px;
+}
+
+.instructions-section h2 {
+  margin-bottom: 15px;
+
+  font-size: 19px;
+  color: #1f2937;
+}
+
+.instructions-section ul {
+  margin: 0;
+  padding-left: 22px;
+}
+
+.instructions-section li {
+  margin-bottom: 11px;
+
+  color: #4b5563;
+
+  font-size: 14px;
+
+  line-height: 1.5;
+}
+
+/* Modality */
+
+.modality-box {
+  padding: 16px;
+
+  background: #eff6ff;
+
+  border-left: 4px solid #2563eb;
+
+  border-radius: 6px;
+
+  margin-bottom: 30px;
+}
+
+.modality-box h3 {
+  margin: 0 0 6px;
+
+  font-size: 14px;
+}
+
+.modality-box p {
+  display: inline;
+
+  margin: 0;
+
+  color: #4b5563;
+
+  font-size: 13px;
+}
+
+.modality-box strong {
+  margin-left: 5px;
+
+  color: #2563eb;
+
+  font-size: 13px;
+}
+
+/* Buttons */
+
+.instruction-actions {
+  display: flex;
+
+  justify-content: space-between;
+
+  gap: 15px;
+}
+
+.back-button,
+.start-button {
+  padding: 11px 18px;
+
+  border-radius: 7px;
+
+  font-size: 13px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.back-button {
+  border: 1px solid #d1d5db;
+
+  background: white;
+
+  color: #374151;
+}
+
+.back-button:hover {
+  background: #f9fafb;
+}
+
+.start-button {
+  border: none;
+
+  background: #2563eb;
+
+  color: white;
+}
+
+.start-button:hover {
+  background: #1d4ed8;
+}
+
+/* Mobile */
+
+@media (max-width: 600px) {
+
+  .instruction-page {
+    padding: 15px;
+    align-items: flex-start;
+  }
+
+  .instruction-card {
+    padding: 22px 18px;
+  }
+
+  .instruction-header h1 {
+    font-size: 22px;
+  }
+
+  .instruction-details {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .instruction-details div {
+    text-align: left;
+  }
+
+  .instruction-actions {
+    flex-direction: column-reverse;
+  }
+
+  .back-button,
+  .start-button {
+    width: 100%;
+  }
+}

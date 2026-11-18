@@ -1,0 +1,103 @@
+
+const API_BASE_URL = "http://127.0.0.1:8000";
+
+// Get the saved access token
+const getAuthHeaders = () => {
+  const token = localStorage.getItem("access_token");
+
+  return token
+    ? { Authorization: `Bearer ${token}` }
+    : {};
+};
+
+// Common API response handler
+const handleResponse = async (response) => {
+  const data = await response.json().catch(() => ({}));
+
+  if (!response.ok) {
+    throw new Error(
+      data.detail || `Request failed (${response.status})`
+    );
+  }
+
+  return data;
+};
+
+// LOGIN USER
+export const loginUser = async (loginData) => {
+  const response = await fetch(`${API_BASE_URL}/auth/login`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(loginData),
+  });
+
+  return handleResponse(response);
+};
+
+// GET ALL ASSESSMENTS
+export const getAssessments = async () => {
+  const token = localStorage.getItem("access_token");
+
+  const response = await fetch(`${API_BASE_URL}/assessments/`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+  });
+
+  const errorData = await response.json().catch(() => ({}));
+
+  if (!response.ok) {
+    throw new Error(
+      errorData.detail || "Failed to fetch assessments"
+    );
+  }
+
+  return errorData;
+};
+
+// GET ONE ASSESSMENT
+export const getAssessment = async (assessmentId) => {
+  const response = await fetch(
+    `${API_BASE_URL}/assessments/${assessmentId}`,
+    {
+      headers: {
+        ...getAuthHeaders(),
+      },
+    }
+  );
+
+  return handleResponse(response);
+};
+
+// CREATE ASSESSMENT
+export const createAssessment = async (assessmentData) => {
+  const response = await fetch(`${API_BASE_URL}/assessments/`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      ...getAuthHeaders(),
+    },
+    body: JSON.stringify(assessmentData),
+  });
+
+  return handleResponse(response);
+};
+
+// PUBLISH ASSESSMENT
+export const publishAssessment = async (assessmentId) => {
+  const response = await fetch(
+    `${API_BASE_URL}/assessments/${assessmentId}/publish`,
+    {
+      method: "PATCH",
+      headers: {
+        ...getAuthHeaders(),
+      },
+    }
+  );
+
+  return handleResponse(response);
+};

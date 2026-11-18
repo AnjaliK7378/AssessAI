@@ -1,0 +1,332 @@
+.page-container {
+  padding: 30px;
+}
+
+.page-header {
+  margin-bottom: 25px;
+}
+
+.page-header h1 {
+  margin: 0;
+}
+
+.page-header p {
+  margin-top: 8px;
+  color: #666;
+}
+
+
+/* ================================
+   TABLE
+   ================================ */
+
+.table-container {
+  background: white;
+  border-radius: 10px;
+  overflow-x: auto;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+table {
+  width: 100%;
+  min-width: 1100px;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 14px 16px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+  font-size: 14px;
+}
+
+th {
+  background: #f5f5f5;
+  color: #555;
+  font-size: 13px;
+}
+
+
+/* ================================
+   CONFIDENCE
+   ================================ */
+
+.confidence {
+  display: inline-block;
+  padding: 5px 9px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.confidence.high {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.confidence.low {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+
+/* ================================
+   STATUS
+   ================================ */
+
+.evaluation-status {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.evaluation-status.completed {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.evaluation-status.pending {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+
+/* ================================
+   VIEW BUTTON
+   ================================ */
+
+.view-button {
+  border: none;
+  background: transparent;
+  color: #2563eb;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.view-button:hover {
+  text-decoration: underline;
+}
+
+
+/* ================================
+   DETAILS
+   ================================ */
+
+.evaluation-details {
+  margin-top: 25px;
+  background: white;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.details-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 25px;
+}
+
+.details-header h2 {
+  margin: 0;
+}
+
+.details-header p {
+  margin-top: 5px;
+  color: #777;
+  font-size: 13px;
+}
+
+.close-button {
+  border: none;
+  background: transparent;
+  font-size: 28px;
+  color: #666;
+  cursor: pointer;
+}
+
+
+/* ================================
+   INFORMATION
+   ================================ */
+
+.evaluation-info {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  padding-bottom: 25px;
+  border-bottom: 1px solid #eee;
+}
+
+.evaluation-info div {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.evaluation-info span {
+  color: #777;
+  font-size: 13px;
+}
+
+.evaluation-info strong {
+  font-size: 14px;
+}
+
+
+/* ================================
+   PIPELINE
+   ================================ */
+
+.pipeline-section {
+  margin-top: 25px;
+}
+
+.pipeline-section h3 {
+  margin-bottom: 20px;
+}
+
+.pipeline {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+}
+
+.pipeline-step {
+  min-width: 150px;
+  padding: 16px;
+  border: 1px solid #dbe3ef;
+  border-radius: 8px;
+  background: #f8fafc;
+}
+
+.step-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 25px;
+  height: 25px;
+
+  margin-bottom: 10px;
+
+  border-radius: 50%;
+
+  background: #2563eb;
+  color: white;
+
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.pipeline-step strong {
+  display: block;
+  font-size: 14px;
+}
+
+.pipeline-step small {
+  display: block;
+  margin-top: 5px;
+  color: #777;
+  font-size: 12px;
+}
+
+.pipeline-arrow {
+  font-size: 20px;
+  color: #64748b;
+}
+
+
+/* ================================
+   VLM
+   ================================ */
+
+.vlm-section {
+  margin-top: 20px;
+  padding: 18px;
+
+  border-radius: 8px;
+  background: #f8fafc;
+  border: 1px dashed #cbd5e1;
+}
+
+.vlm-section h4 {
+  margin: 0 0 8px;
+}
+
+.vlm-section p {
+  margin: 0;
+  color: #64748b;
+  font-size: 14px;
+}
+
+
+/* ================================
+   FINAL STATUS
+   ================================ */
+
+.final-evaluation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-top: 20px;
+  padding: 15px;
+
+  border-radius: 8px;
+  background: #f5f7fb;
+}
+
+.final-evaluation span {
+  color: #555;
+  font-size: 14px;
+}
+
+.final-evaluation strong {
+  font-size: 14px;
+}
+
+
+/* ================================
+   MOBILE
+   ================================ */
+
+@media (max-width: 900px) {
+
+  .page-container {
+    padding: 25px;
+  }
+
+  .evaluation-info {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+
+@media (max-width: 650px) {
+
+  .page-container {
+    padding: 20px 15px;
+  }
+
+  .evaluation-details {
+    padding: 18px;
+  }
+
+  .evaluation-info {
+    grid-template-columns: 1fr;
+  }
+
+  .pipeline {
+    align-items: stretch;
+  }
+
+  .pipeline-step {
+    min-width: 140px;
+  }
+}
